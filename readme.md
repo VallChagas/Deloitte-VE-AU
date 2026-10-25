@@ -1,134 +1,256 @@
 # Daikibo Industries — IIoT Telemetry Data Unification
 
-A Python solution for converting industrial IoT (IIoT) telemetry data from two different input formats into a single, consistent unified format — enabling seamless processing and storage of device data across Daikibo Industries' manufacturing infrastructure.
+> A Python solution for converting industrial IoT (IIoT) telemetry data from two different input formats into a single, unified data model for consistent processing across Daikibo Industries' manufacturing infrastructure.
 
-> **Part of the Deloitte Virtual Experience Program** — Task 1: Unifying Manufacturing Telemetry Data Models.
+> Part of the Deloitte Virtual Experience Program · Task 1: Unifying Manufacturing Telemetry Data Models
 
-🔗 **Live demo:** [https://vallchagas.github.io/Deloitte-VE-AU/]
+## Table of Contents
 
-## 📋 Business Context
+- [Background](#background)
+- [Business Context](#business-context)
+- [Objective](#objective)
+- [Install](#install)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Data Formats](#data-formats)
+- [Implementation](#implementation)
+- [Interactive Demo](#interactive-demo)
+- [Tests](#tests)
+- [Requirements](#requirements)
+- [Implementation Notes](#implementation-notes)
+- [Concepts Applied](#concepts-applied)
+- [Contributing](#contributing)
+- [License](#license)
 
-**Daikibo Industries** (formerly Macaro), a global leader in heavy machinery manufacturing headquartered in Tokyo, Japan, is integrating IIoT devices to monitor, measure, and analyze its manufacturing processes.
+## Background
 
-**The problem:** half of Daikibo's infrastructure streams telemetry data in one format, and the other half in a different format. Both represent the same information but use different structures, preventing unified processing.
+This project was developed as part of the **Deloitte Virtual Experience Program**.
 
-**The goal:** unify the two data models so that all device data is stored in a **consistent format**, enabling downstream analytics and operational efficiency.
+The challenge focuses on unifying telemetry data models from industrial IoT devices used across a large manufacturing organization. Although all devices emit equivalent information, they use different JSON structures, making centralized processing difficult.
 
-## 🎯 Objective
+The solution provides a lightweight Python implementation capable of transforming both source formats into a single, standardized output format suitable for analytics pipelines, monitoring systems, and long-term storage.
 
-Implement two conversion functions that transform each input format into a single **unified output format**, ensuring compatibility across all devices in the IIoT pipeline.
+**Live Demo:**  
+https://vallchagas.github.io/Deloitte-VE-AU/
 
-## 📁 Project Structure
+## Business Context
 
+**Daikibo Industries** (formerly Macaro) is a global heavy machinery manufacturer headquartered in Tokyo, Japan.
+
+As part of its digital transformation strategy, the company has adopted Industrial Internet of Things (IIoT) devices throughout its manufacturing facilities to monitor and analyze production operations.
+
+A challenge emerged because half of the infrastructure transmits telemetry using one data format while the remaining systems use another. Although both models contain the same information, the differing structures prevent uniform downstream processing.
+
+The objective is to convert both formats into one standardized telemetry schema.
+
+## Objective
+
+Implement conversion functions that:
+
+- Accept telemetry messages from either supported input format.
+- Normalize timestamps and field structures.
+- Produce a single, unified JSON schema.
+- Enable consistent processing across the IIoT ecosystem.
+
+## Install
+
+Clone the repository:
+
+```bash
+git clone <repo-url>
+cd <repo-name>
 ```
+
+No external dependencies are required.
+
+The project uses only Python's standard library.
+
+## Usage
+
+Run the automated tests:
+
+```bash
+python main.py
+```
+
+To launch the interactive demo locally:
+
+```bash
+python -m http.server 8000
+```
+
+Then open:
+
+```text
+http://localhost:8000
+```
+
+## Project Structure
+
+```text
 .
-├── index.html           # Interactive demo page (GitHub Pages)
+├── index.html           # Interactive GitHub Pages demo
 ├── assets/
-│   ├── style.css        # Page styling
-│   └── script.js        # Demo logic (JavaScript mirror of main.py)
-├── data-1.json          # Sample telemetry — Format 1 (flat)
-├── data-2.json          # Sample telemetry — Format 2 (nested)
-├── data-result.json     # Target unified format
-├── main.py              # Official implementation + automated tests
+│   ├── style.css        # Demo styling
+│   └── script.js        # JavaScript version of conversion logic
+├── data-1.json          # Sample telemetry (Format 1)
+├── data-2.json          # Sample telemetry (Format 2)
+├── data-result.json     # Expected unified output
+├── main.py              # Official Python implementation
 ├── README.md
 └── .gitignore
 ```
 
-> **Note:** `main.py` is the official, tested implementation. The files in `assets/` exist only to power the interactive demo on GitHub Pages — they are a JavaScript mirror of the Python logic and do not replace it.
+> `main.py` is the authoritative implementation. The JavaScript files exist only to support the browser-based demonstration.
 
-## 🔄 The Three Data Formats
+## Data Formats
 
-The repository includes three JSON files that represent the **same telemetry message** in different formats:
+The repository contains three JSON files representing the same telemetry event in different schemas.
 
-- **`data-1.json`** — Format 1 (flat structure)
-- **`data-2.json`** — Format 2 (nested structure)
-- **`data-result.json`** — Target unified format
+### Format 1 (`data-1.json`)
 
-### Format 1 — Flat structure (`data-1.json`)
+Characteristics:
 
-Key characteristics:
-- `location` is a **single slash-separated string** (e.g., `"japan/tokyo/.../section-1"`)
-- Status and temperature are **top-level fields** (`operationStatus`, `temp`)
-- `timestamp` is already in **milliseconds since epoch** (integer)
+- Flat JSON structure
+- `location` stored as a slash-separated string
+- `operationStatus` and `temp` at the top level
+- Timestamp already stored as milliseconds since Unix epoch
 
-### Format 2 — Nested structure (`data-2.json`)
+Example location:
 
-Key characteristics:
-- Device ID and type are **nested** inside a `device` object
-- `location` is **spread across 5 separate fields** (`country`, `city`, `area`, `factory`, `section`)
-- Status and temperature are inside a `data` object
-- `timestamp` is in **ISO 8601** format (string, UTC)
+```text
+japan/tokyo/keiyo-industrial-zone/factory-1/section-1
+```
 
-### Unified Format — Target (`data-result.json`)
+### Format 2 (`data-2.json`)
 
-Key characteristics:
-- `deviceID` and `deviceType` at the **top level**
-- `timestamp` **always in milliseconds since epoch** (integer)
-- `location` as a **nested object** with 5 keys (`country`, `city`, `area`, `factory`, `section`)
-- `data` as a **nested object** with `status` and `temperature`
+Characteristics:
 
-## 🛠️ Implementation
+- Nested device information
+- Location distributed across individual fields
+- Telemetry contained in a nested `data` object
+- Timestamp represented as an ISO 8601 string
+
+### Unified Format (`data-result.json`)
+
+Characteristics:
+
+- Top-level `deviceID`
+- Top-level `deviceType`
+- Timestamp always represented in milliseconds since epoch
+- Structured `location` object
+- Structured `data` object
+
+Example structure:
+
+```json
+{
+  "deviceID": "...",
+  "deviceType": "...",
+  "timestamp": 1585055486000,
+  "location": {
+    "country": "...",
+    "city": "...",
+    "area": "...",
+    "factory": "...",
+    "section": "..."
+  },
+  "data": {
+    "status": "...",
+    "temperature": ...
+  }
+}
+```
+
+## Implementation
 
 ### `convertFromFormat1(jsonObject)`
 
-Converts Format 1 → unified:
+Converts the flat schema into the unified format.
 
-1. Splits the `location` string using `split("/")`
-2. Maps each part to `country`, `city`, `area`, `factory`, `section`
-3. Renames `operationStatus` → `status` and `temp` → `temperature`
-4. Groups both inside the `data` object
-5. Copies `timestamp` directly (already in milliseconds)
+Responsibilities:
+
+- Split the location string with `split("/")`
+- Map values into a location object
+- Rename:
+  - `operationStatus` → `status`
+  - `temp` → `temperature`
+- Create a nested `data` object
+- Preserve the existing timestamp
 
 ### `convertFromFormat2(jsonObject)`
 
-Converts Format 2 → unified:
+Converts the nested schema into the unified format.
 
-1. Converts the ISO 8601 timestamp to milliseconds since epoch:
-   ```python
-   data = datetime.datetime.strptime(ts, "%Y-%m-%dT%H:%M:%S.%fZ")
-   timestamp = round((data - datetime.datetime(1970, 1, 1)).total_seconds() * 1000)
-   ```
-2. Flattens `device.id` → `deviceID` and `device.type` → `deviceType`
-3. Groups the 5 location fields inside the `location` object
-4. Copies `data` directly (already in the correct shape)
+Responsibilities:
+
+- Convert ISO 8601 timestamps to Unix epoch milliseconds
+- Flatten:
+  - `device.id` → `deviceID`
+  - `device.type` → `deviceType`
+- Assemble the location object
+- Preserve telemetry values
+
+Timestamp conversion:
+
+```python
+data = datetime.datetime.strptime(
+    ts,
+    "%Y-%m-%dT%H:%M:%S.%fZ"
+)
+
+timestamp = round(
+    (data - datetime.datetime(1970, 1, 1))
+    .total_seconds() * 1000
+)
+```
 
 ### `main(jsonObject)`
 
-Routes to the correct converter based on the presence of the `device` key:
-- No `device` key → Format 1
-- Has `device` key → Format 2
+Automatically routes input based on structure:
 
-## 🖥️ Interactive Demo
+- Format 1 → no `device` key
+- Format 2 → contains `device`
 
-The `index.html` page provides a visual walkthrough of the project:
+Example:
 
-- Displays all three JSON formats side by side (loaded from the real files)
-- Lets you pick an input format and convert it to the unified output in real time
-- Links back to the official Python implementation
+```python
+if jsonObject.get("device"):
+    return convertFromFormat2(jsonObject)
 
-> The demo is powered by JavaScript (`assets/script.js`) and runs entirely in the browser. It exists for visualization and portfolio purposes; the authoritative logic is the one in `main.py`, validated by the automated tests below.
-
-To view it locally:
-
-```bash
-# Any static server works, e.g.:
-python -m http.server 8000
-# then open http://localhost:8000
+return convertFromFormat1(jsonObject)
 ```
 
-> Opening `index.html` directly via `file://` may block the `fetch()` calls due to browser security policies — use a local server instead.
+## Interactive Demo
 
-## 🧪 Tests
+The repository includes a GitHub Pages demonstration that visualizes the conversion process.
 
-The project includes **3 automated tests** using `unittest`:
+Features:
 
-| Test | What it validates |
-|---|---|
-| `test_sanity` | Integrity of the expected `data-result.json` |
-| `test_dataType1` | Conversion from Format 1 |
-| `test_dataType2` | Conversion from Format 2 (including timestamp conversion) |
+- Displays all three JSON schemas side by side.
+- Loads real repository files.
+- Converts telemetry in real time.
+- Demonstrates the Python logic in the browser.
 
-Run the tests:
+The demo uses:
+
+- HTML
+- CSS
+- Vanilla JavaScript
+
+It exists strictly for visualization and portfolio purposes.
+
+## Tests
+
+The project contains three automated tests built with `unittest`.
+
+| Test | Purpose |
+|--------|---------|
+| `test_sanity` | Validates the expected output schema |
+| `test_dataType1` | Verifies Format 1 conversion |
+| `test_dataType2` | Verifies Format 2 conversion and timestamp normalization |
+
+Run:
 
 ```bash
 python main.py
@@ -136,7 +258,7 @@ python main.py
 
 Expected output:
 
-```
+```text
 ...
 ----------------------------------------------------------------------
 Ran 3 tests in 0.011s
@@ -144,38 +266,81 @@ Ran 3 tests in 0.011s
 OK
 ```
 
-## ⚙️ Requirements
+## Requirements
 
-- **Python 3.7+** (uses `datetime.strptime` with `%f`)
-- Any modern browser (for the demo page)
+### Runtime
 
-## 📝 Implementation Notes
+- Python 3.7+
 
-- **Encoding:** JSON files are opened with `encoding="utf-8"` to correctly handle special characters such as the `ō` in `keiyō-industrial-zone`. Without this, Python on Windows raises `UnicodeDecodeError` (cp1252 codec).
-- **Timestamp:** Format 2 uses ISO 8601 in UTC (suffix `Z`). Since the Unix epoch is also UTC, subtracting `datetime(1970, 1, 1)` directly is correct.
-- **Rounding:** `round()` is applied to the timestamp to avoid floating-point artifacts (e.g., `...782.9998`).
-- **Safe routing:** `main` uses `.get("device")` instead of `["device"]` to avoid `KeyError` when the input is Format 1.
-- **Demo vs. official code:** the JavaScript in `assets/script.js` mirrors the Python logic only for the interactive page. It is not tested and should not be considered a replacement for `main.py`.
+### Demo
 
-## 🚀 How to Run
+- Any modern web browser
 
-The repository already includes the three sample JSON files, so you can run the tests directly:
+## Implementation Notes
 
-```bash
-# Clone the repository
-git clone <repo-url>
-cd <repo-name>
+### Character Encoding
 
-# Run the tests
-python main.py
+All JSON files are opened using UTF-8 encoding:
+
+```python
+open(file, encoding="utf-8")
 ```
 
-## 📚 Concepts Applied
+This ensures compatibility with special characters such as:
 
-- JSON manipulation in Python (`json.load`)
-- Data format conversion (flat ↔ nested)
-- ISO 8601 → Unix epoch timestamp conversion (milliseconds)
+```text
+keiyō-industrial-zone
+```
+
+### Timestamp Handling
+
+Format 2 stores timestamps using the ISO 8601 UTC format:
+
+```text
+2020-03-25T15:24:46.000Z
+```
+
+These values are converted into Unix epoch milliseconds for consistency.
+
+### Rounding
+
+`round()` is used to eliminate floating-point precision artifacts generated during timestamp conversion.
+
+### Safe Routing
+
+The project uses:
+
+```python
+jsonObject.get("device")y `main.py` should be considered authoritative.
+
+## Concepts Applied
+
+- JSON parsing and manipulation
+- Data normalization
+- Schema transformation
+- Flat-to-nested object conversion
+- ISO 8601 timestamp processing
+- Unix epoch conversion
 - Automated testing with `unittest`
-- Character encoding handling (`utf-8`)
-- Pure functions and structure-based routing
-- Static site deployment with GitHub Pages (HTML/CSS/JS)
+- UTF-8 encoding management
+- Pure function design
+- Structure-based routing
+- Static site deployment with GitHub Pages
+
+## Contributing
+
+Contributions are welcome.
+
+Potential areas for improvement include:
+
+- Additional telemetry formats
+- Extended validation rules
+- Enhanced test coverage
+- Documentation improvements
+- Interactive demo enhancements
+
+Please open an issue before submitting major changes.
+
+## License
+
+MIT © Deloitte Virtual Experience Program contributors.
