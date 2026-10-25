@@ -4,7 +4,7 @@ A Python solution for converting industrial IoT (IIoT) telemetry data from two d
 
 > **Part of the Deloitte Virtual Experience Program** — Task 1: Unifying Manufacturing Telemetry Data Models.
 
-🔗 **Live demo:** [https://SEU-USUARIO.github.io/SEU-REPO/](https://SEU-USUARIO.github.io/SEU-REPO/)
+🔗 **Live demo:** [https://vallchagas.github.io/Deloitte-VE-AU/]
 
 ## 📋 Business Context
 
