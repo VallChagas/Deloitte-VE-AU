@@ -4,6 +4,8 @@
 
 > Part of the Deloitte Virtual Experience Program · Task 1: Unifying Manufacturing Telemetry Data Models
 
+> https://vallchagas.github.io/Deloitte-VE-AU/
+
 ## Table of Contents
 
 - [Background](#background)
