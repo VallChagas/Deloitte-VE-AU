@@ -3,67 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daikibo IIoT Telemetry Unification — Deloitte Virtual Experience</title>
+    <meta name="description" content="Daikibo Industries IIoT telemetry data unification — Deloitte Virtual Experience Task 1.">
+
+    <title>Daikibo IIoT — Telemetry Unification</title>
+
+    <!--=============== GOOGLE FONTS ===============-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!--=============== CSS ===============-->
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-    <header>
-        <h1>Daikibo Industries</h1>
-        <p class="subtitle">IIoT Telemetry Data Unification — Deloitte Virtual Experience (Task 1)</p>
+    <!--==================== HEADER ====================-->
+    <header class="header" id="header">
+        <div class="header__inner container">
+            <a href="#" class="header__logo">
+                <span class="header__logo-mark">◆</span>
+                <span>Daikibo<span class="header__logo-dot">.</span>Industries</span>
+            </a>
+
+            <nav class="nav" id="nav">
+                <ul class="nav__list">
+                    <li><a href="#problem" class="nav__link">Problem</a></li>
+                    <li><a href="#formats" class="nav__link">Formats</a></li>
+                    <li><a href="#demo" class="nav__link">Demo</a></li>
+                    <li>
+                        <a href="https://github.com/SEU-USUARIO/SEU-REPO" target="_blank" rel="noopener" class="nav__link nav__link--cta">
+                            GitHub ↗
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <button class="nav__toggle" id="nav-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </header>
 
-    <main>
-        <section class="intro">
-            <h2>The Problem</h2>
-            <p>Daikibo's manufacturing infrastructure streams telemetry data in <strong>two different formats</strong>. Half the devices use a flat structure, the other half a nested one. Both carry the same information, but the inconsistency prevents unified processing.</p>
-            <p>The goal is to convert both formats into a <strong>single unified output</strong>.</p>
-        </section>
+    <!--==================== MAIN ====================-->
+    <main class="main">
 
-        <section class="formats">
-            <h2>The Three Formats</h2>
-            <div class="cards">
-                <div class="card">
-                    <h3>Format 1 (Flat)</h3>
-                    <pre id="json-1">Loading...</pre>
+        <!--==================== HERO ====================-->
+        <section class="hero" id="hero">
+            <div class="hero__bg-grid" aria-hidden="true"></div>
+
+            <div class="hero__inner container">
+                <div class="hero__badge">
+                    <span class="pulse-dot"></span>
+                    Deloitte Virtual Experience · Task 1
                 </div>
-                <div class="card">
-                    <h3>Format 2 (Nested)</h3>
-                    <pre id="json-2">Loading...</pre>
+
+                <h1 class="hero__title">
+                    <span class="hero__title-line">IIoT Telemetry</span>
+                    <span class="hero__title-line hero__title-line--accent">Unification</span>
+                </h1>
+
+                <p class="hero__subtitle">
+                    Two formats. One truth.<br>
+                    Converting industrial sensor data into a single consistent model for Daikibo Industries.
+                </p>
+
+                <div class="hero__actions">
+                    <a href="#demo" class="btn btn--primary">
+                        Try the demo
+                        <span class="btn__arrow">↓</span>
+                    </a>
+                    <a href="https://github.com/SEU-USUARIO/SEU-REPO" target="_blank" rel="noopener" class="btn btn--ghost">
+                        Source code ↗
+                    </a>
                 </div>
-                <div class="card highlight">
-                    <h3>Unified (Target)</h3>
-                    <pre id="json-result">Loading...</pre>
+
+                <div class="hero__stats" data-reveal>
+                    <div class="stat">
+                        <div class="stat__value">2</div>
+                        <div class="stat__label">Input formats</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat__value">1</div>
+                        <div class="stat__label">Unified output</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat__value">
+                            <span class="stat__ok">3</span>
+                        </div>
+                        <div class="stat__label">Tests passing</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="demo">
-            <h2>Interactive Demo</h2>
-            <p>Choose an input format, then click convert to see the unified result produced by the same logic implemented in <code>main.py</code>.</p>
-            <div class="controls">
-                <select id="input-select">
-                    <option value="1">Format 1 (Flat)</option>
-                    <option value="2">Format 2 (Nested)</option>
-                </select>
-                <button id="convert-btn">Convert to Unified</button>
-            </div>
-            <div class="demo-output">
-                <h3>Result</h3>
-                <pre id="demo-result">Select a format and click Convert.</pre>
+        <!--==================== PROBLEM ====================-->
+        <section class="section" id="problem">
+            <div class="container">
+                <div class="section__head" data-reveal>
+                    <span class="section__eyebrow">// The problem</span>
+                    <h2 class="section__title">Half the factory speaks a different language</h2>
+                </div>
+
+                <div class="problem__grid">
+                    <p class="problem__text" data-reveal>
+                        Daikibo's manufacturing infrastructure streams telemetry from thousands of
+                        IIoT devices. <strong>Half of them</strong> emit a <em>flat</em> structure — everything
+                        at the top level, location packed into a single slash-separated string.
+                    </p>
+                    <p class="problem__text" data-reveal>
+                        The <strong>other half</strong> emits a <em>nested</em> structure — device info
+                        tucked inside a <code>device</code> object, location split across five fields,
+                        and timestamps as ISO 8601 strings instead of epoch milliseconds.
+                    </p>
+                    <p class="problem__text problem__text--full" data-reveal>
+                        Same information. Different shapes. Downstream systems can't process them
+                        together. The fix: <strong>convert both into a single unified model</strong>.
+                    </p>
+                </div>
             </div>
         </section>
 
-        <section class="links">
-            <h2>Source Code</h2>
-            <p>The official implementation is in Python (<code>main.py</code>) with automated <code>unittest</code> tests. This page is a visual demonstration only.</p>
-            <a href="https://github.com/VallChagas/Deloitte-VE-AU" target="_blank" class="btn">View on GitHub</a>
+        <!--==================== FORMATS ====================-->
+        <section class="section" id="formats">
+            <div class="container">
+                <div class="section__head" data-reveal>
+                    <span class="section__eyebrow">// The formats</span>
+                    <h2 class="section__title">Three shapes, one target</h2>
+                </div>
+
+                <div class="formats">
+                    <article class="format-card format-card--1" data-reveal>
+                        <header class="format-card__head">
+                            <span class="format-card__tag">Input · 1</span>
+                            <span class="format-card__label">Flat</span>
+                        </header>
+                        <pre class="format-card__code" id="json-1">Loading…</pre>
+                    </article>
+
+                    <div class="format-arrow" aria-hidden="true">
+                        <svg viewBox="0 0 40 40" width="40" height="40">
+                            <path d="M4 20 H28 M22 14 L28 20 L22 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+
+                    <article class="format-card format-card--target" data-reveal>
+                        <header class="format-card__head">
+                            <span class="format-card__tag format-card__tag--ok">Target</span>
+                            <span class="format-card__label">Unified</span>
+                        </header>
+                        <pre class="format-card__code" id="json-result">Loading…</pre>
+                    </article>
+
+                    <div class="format-arrow format-arrow--flip" aria-hidden="true">
+                        <svg viewBox="0 0 40 40" width="40" height="40">
+                            <path d="M4 20 H28 M22 14 L28 20 L22 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+
+                    <article class="format-card format-card--2" data-reveal>
+                        <header class="format-card__head">
+                            <span class="format-card__tag">Input · 2</span>
+                            <span class="format-card__label">Nested</span>
+                        </header>
+                        <pre class="format-card__code" id="json-2">Loading…</pre>
+                    </article>
+                </div>
+            </div>
         </section>
+
+        <!--==================== DEMO ====================-->
+        <section class="section" id="demo">
+            <div class="container">
+                <div class="section__head" data-reveal>
+                    <span class="section__eyebrow">// Interactive demo</span>
+                    <h2 class="section__title">Convert in real time</h2>
+                    <p class="section__desc">
+                        Pick an input format and run the same logic as <code>main.py</code> — mirrored here in JavaScript
+                        so it runs in your browser.
+                    </p>
+                </div>
+
+                <div class="demo" data-reveal>
+                    <div class="demo__controls">
+                        <label for="input-select" class="demo__label">Input</label>
+                        <select id="input-select" class="demo__select">
+                            <option value="1">Format 1 — Flat</option>
+                            <option value="2">Format 2 — Nested</option>
+                        </select>
+                        <button id="convert-btn" class="btn btn--primary demo__btn">
+                            Convert
+                            <span class="btn__arrow">→</span>
+                        </button>
+                    </div>
+
+                    <div class="demo__output">
+                        <div class="demo__output-head">
+                            <span>output.json</span>
+                            <span class="demo__status" id="demo-status">idle</span>
+                        </div>
+                        <pre id="demo-result">Select a format and click Convert.</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--==================== SOURCE ====================-->
+        <section class="section section--last" id="source">
+            <div class="container">
+                <div class="source" data-reveal>
+                    <div>
+                        <span class="section__eyebrow">// The real code</span>
+                        <h2 class="section__title">The official implementation is Python</h2>
+                        <p class="section__desc">
+                            This page is a visual mirror. The authoritative logic lives in <code>main.py</code>,
+                            validated by <code>unittest</code>. The demo on this page exists to show the conversion
+                            visually.
+                        </p>
+                    </div>
+                    <a href="https://github.com/SEU-USUARIO/SEU-REPO" target="_blank" rel="noopener" class="btn btn--primary">
+                        View on GitHub ↗
+                    </a>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <footer>
-        <p>Part of the Deloitte Virtual Experience Program</p>
+    <!--==================== FOOTER ====================-->
+    <footer class="footer">
+        <div class="container footer__inner">
+            <p class="footer__brand">
+                <span class="header__logo-mark">◆</span>
+                Daikibo Industries · IIoT Telemetry
+            </p>
+            <p class="footer__meta">
+                Deloitte Virtual Experience · Built with Python &amp; vanilla JS
+            </p>
+        </div>
     </footer>
 
-    <script src="assets/script.js"></script>
+    <!--=============== MAIN JS ===============-->
+    <script src="assets/main.js"></script>
 </body>
 </html>
